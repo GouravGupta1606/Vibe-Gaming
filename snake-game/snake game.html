@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Snake Game</title>
+    <link href="https://fonts.cdnfonts.com/css/surprisedmonkey" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+            /* background-image: url("https://w0.peakpx.com/wallpaper/440/913/HD-wallpaper-snake-pass-and-background-snake-game.jpg"); */
+            background-image: url("img.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 8px #00ffe0;
+            font-family: surprisedmonkey, sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(25, 1fr);
+            grid-template-rows: repeat(25, 1fr);
+            width: 500px;
+            height: 500px;
+            background: rgb(10, 11, 10);
+            /* backdrop-filter: blur(10px); */
+            border: px solid rgb(102, 173, 108);
+            border-radius: 20px;
+
+        }
+
+        .cell {
+            border: 0.5px solid rgb(10, 11, 10);
+            background-color: rgb(10, 11, 10);
+            /* 👈 adds transparency */
+            /* transition: background 0.2s ease-in-out; */
+        }
+
+
+        .snake {
+            background: rgb(112, 243, 112);
+            border-radius: 10px
+        }
+
+
+
+        .head {
+            background: url(https://th.bing.com/th?q=Snake+Game+Head+PNG&w=120&h=120&c=1&rs=1&qlt=90&r=0&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247);
+            background-size: cover;
+            background-color: aqua;
+            border-radius: 10px;
+        }
+
+        .food {
+            background-image: url("https://cdn-icons-png.flaticon.com/512/415/415733.png");
+            background-size: cover;
+            background-position: center;
+        }
+
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-family: surprisedmonkey, sans-serif;
+            font-size: 16px;
+            cursor: url(cursor.cur);
+            background-color: #15dd26;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body><a href="../home/index.html" style="position:fixed;top:16px;left:16px;padding:8px 20px;font-size:0.9rem;font-family:surprisedmonkey,sans-serif;background:rgba(0,0,0,0.6);border:1px solid rgba(0,255,255,0.4);border-radius:20px;color:cyan;text-decoration:none;z-index:99;">← Back to Home</a>
+    <h1 id="title">Snake Game 🐍</h1>
+    <div class="container"></div>
+    <button id="restartBtn">Restart Game</button>
+    <button id="musicToggle" onclick="toggleMusic()">🔇 Unmute Music</button>
+    <audio id="bgMusic" autoplay loop>
+        <source src="bg-music.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        const container = document.querySelector(".container");
+        const restartBtn = document.getElementById("restartBtn");
+        let cells = [];
+
+        for (let i = 0; i < 625; i++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            container.appendChild(cell);
+            cells.push(cell);
+        }
+
+        let snake, headX, headY, direction, foodIndex, game;
+
+        function startGame() {
+            // Clear previous state
+            cells.forEach(cell => cell.className = "cell");
+            if (game) clearInterval(game);
+
+            snake = [];
+            headX = 10;
+            headY = 10;
+            direction = 'right';
+            foodIndex = -1;
+
+            snake.push(headY * 25 + headX);
+            placeFood();
+            game = setInterval(move, 200);
+        }
+
+        function placeFood() {
+            if (foodIndex !== -1) cells[foodIndex].classList.remove("food");
+            let newFood;
+            do {
+                newFood = Math.floor(Math.random() * 625);
+            } while (snake.includes(newFood));
+            foodIndex = newFood;
+            cells[foodIndex].classList.add("food");
+        }
+
+        document.addEventListener("keydown", (e) => {
+            const d = e.key.replace("Arrow", "").toLowerCase();
+            if (
+                (d === "up" && direction !== "down") ||
+                (d === "down" && direction !== "up") ||
+                (d === "left" && direction !== "right") ||
+                (d === "right" && direction !== "left")
+            ) {
+                direction = d;
+            }
+        });
+
+        function move() {
+            snake.forEach(i => cells[i].classList.remove("snake", "head"));
+
+            if (direction === "up") headY--;
+            if (direction === "down") headY++;
+            if (direction === "left") headX--;
+            if (direction === "right") headX++;
+
+            if (headX < 0 || headX > 24 || headY < 0 || headY > 24) {
+                showGameOver();
+                clearInterval(game);
+
+                return;
+            }
+
+            const newHead = headY * 25 + headX;
+
+            if (snake.includes(newHead)) {
+                showGameOver();
+                clearInterval(game);
+                return;
+            }
+
+            snake.unshift(newHead);
+
+            if (newHead === foodIndex) {
+                placeFood();
+            } else {
+                snake.pop();
+            }
+
+            snake.forEach((i, idx) => {
+                cells[i].classList.add(idx === 0 ? "head" : "snake");
+            });
+        }
+
+        restartBtn.addEventListener("click", startGame);
+
+        startGame(); // Initial launch
+        function showGameOver() {
+            // Create overlay
+            const overlay = document.createElement("div");
+            overlay.style.position = "fixed";
+            overlay.style.width = "100vw";
+            overlay.style.height = "100vh";
+            overlay.style.background = "rgba(0, 0, 0, 0.7)";
+            overlay.style.display = "flex";
+            overlay.style.justifyContent = "center";
+            overlay.style.alignItems = "center";
+            overlay.style.zIndex = "999";
+
+            // Create box
+            const box = document.createElement("div");
+            box.style.background = "rgba(255,255,255,0.1)";
+            box.style.backdropFilter = "blur(10px)";
+            box.style.border = "2px solid white";
+            box.style.borderRadius = "15px";
+            box.style.padding = "30px";
+            box.style.textAlign = "center";
+            box.style.color = "white";
+            box.style.fontFamily = "surprisedmonkey, sans-serif";
+
+            // Score
+            const score = document.createElement("p");
+            score.textContent = `Your Score: ${snake.length - 1}`;
+            score.style.fontSize = "20px";
+
+            // Button
+            const btn = document.createElement("button");
+            btn.textContent = "Play Again";
+            btn.style.marginTop = "20px";
+            btn.style.padding = "10px 20px";
+            btn.style.borderRadius = "5px";
+            btn.style.border = "none";
+            btn.style.backgroundColor = "#15dd26";
+            btn.style.color = "white";
+            btn.style.fontSize = "16px";
+            btn.style.cursor = "pointer";
+            btn.onclick = function () {
+                document.body.removeChild(overlay);
+                startGame();
+            };
+
+            box.appendChild(score);
+            box.appendChild(btn);
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+        }
+        function toggleMusic() {
+            const music = document.getElementById("bgMusic");
+            const button = document.getElementById("musicToggle");
+
+            if (music.paused) {
+                music.play();
+                button.innerText = "🔊 Mute Music";
+            } else {
+                music.pause();
+                button.innerText = "🔇 Unmute Music";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

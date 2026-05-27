@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic Tac Toe</title>
+  <link href="https://fonts.cdnfonts.com/css/surprisedmonkey" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: url("tictac.jpg");
+      background-size: cover;
+      background-position: center;
+      flex-direction: column;
+      font-family: surprisedmonkey, sans-serif;
+      gap: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: cyan;
+      text-shadow: 0 0 20px cyan, 0 0 40px cyan;
+      letter-spacing: 4px;
+    }
+    .turn-indicator {
+      font-size: 1.2rem;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(0,255,255,0.4);
+      padding: 8px 24px;
+      border-radius: 20px;
+      min-width: 200px;
+      text-align: center;
+    }
+    .turn-indicator span {
+      color: cyan;
+      font-size: 1.4rem;
+    }
+    #xo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      width: 300px;
+      height: 300px;
+      gap: 6px;
+      background: rgba(0,255,255,0.15);
+      padding: 6px;
+      border-radius: 16px;
+      border: 2px solid rgba(0,255,255,0.4);
+      box-shadow: 0 0 30px rgba(0,255,255,0.3);
+    }
+    .box {
+      border-radius: 10px;
+      text-align: center;
+      align-content: center;
+      font-size: 3rem;
+      font-weight: bolder;
+      cursor: pointer;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.1);
+      transition: background 0.2s, transform 0.1s;
+      user-select: none;
+    }
+    .box:hover:not(.winner):not(.taken) {
+      background: rgba(0,255,255,0.12);
+      transform: scale(1.04);
+    }
+    .box.x-mark { color: #ff4488; text-shadow: 0 0 15px #ff4488; }
+    .box.o-mark { color: #00f2ff; text-shadow: 0 0 15px #00f2ff; }
+    .winner {
+      animation: pulse 0.6s infinite alternate;
+      background: rgba(0,255,100,0.15) !important;
+      border-color: lime !important;
+    }
+    @keyframes pulse {
+      from { box-shadow: 0 0 10px lime; transform: scale(1); }
+      to   { box-shadow: 0 0 25px lime; transform: scale(1.06); }
+    }
+    .message {
+      font-size: 1.6rem;
+      text-align: center;
+      padding: 12px 30px;
+      border-radius: 16px;
+      border: 2px solid;
+      background: rgba(0,0,0,0.7);
+      animation: fadeIn 0.4s ease;
+    }
+    .message.win  { color: lime;   border-color: lime;   text-shadow: 0 0 15px lime; }
+    .message.draw { color: orange; border-color: orange; text-shadow: 0 0 15px orange; }
+    @keyframes fadeIn { from { opacity:0; transform: scale(0.8); } to { opacity:1; transform: scale(1); } }
+    .reset-btn {
+      padding: 10px 36px;
+      font-size: 1.1rem;
+      font-family: surprisedmonkey, sans-serif;
+      background: linear-gradient(135deg, #00f2ff, #0575e6);
+      border: none;
+      border-radius: 30px;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(0,255,255,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .reset-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(0,255,255,0.8);
+    }
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      padding: 8px 20px;
+      font-size: 0.9rem;
+      font-family: surprisedmonkey, sans-serif;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(0,255,255,0.4);
+      border-radius: 20px;
+      color: cyan;
+      text-decoration: none;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: rgba(0,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <a href="../home/index.html" class="back-btn">← Back to Home</a>
+  <div class="content">
+    <h1>TIC-TAC-TOE</h1>
+    <div class="turn-indicator">Turn: <span id="turn-display">X</span></div>
+    <div id="xo">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <div id="message-area"></div>
+    <button class="reset-btn" id="resetBtn">🔄 Reset</button>
+  </div>
+
+  <script>
+    const boxes = document.querySelectorAll(".box");
+    const resetBtn = document.getElementById("resetBtn");
+    const msgArea = document.getElementById("message-area");
+    const turnDisplay = document.getElementById("turn-display");
+    let count = 0;
+    let gameOver = false;
+
+    const winCombos = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+
+    function showMessage(text, type) {
+      msgArea.innerHTML = '';
+      const msg = document.createElement("div");
+      msg.classList.add("message", type);
+      msg.textContent = text;
+      msgArea.appendChild(msg);
+    }
+
+    function checkWinner(player) {
+      for (const [a,b,c] of winCombos) {
+        if (boxes[a].innerText === player &&
+            boxes[b].innerText === player &&
+            boxes[c].innerText === player) {
+          boxes[a].classList.add("winner");
+          boxes[b].classList.add("winner");
+          boxes[c].classList.add("winner");
+          // FIX: proper win message (was broken template literal ternary bug)
+          showMessage(player === 'X' ? "🎉 X Wins!" : "🎉 O Wins!", "win");
+          gameOver = true;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    boxes.forEach(box => {
+      box.addEventListener('click', () => {
+        if (box.innerText !== '' || gameOver) return;
+        const player = (count % 2 === 0) ? 'X' : '0';
+        box.innerText = player;
+        box.classList.add(player === 'X' ? 'x-mark' : 'o-mark', 'taken');
+        count++;
+        if (checkWinner(player)) return;
+        if (count === 9) {
+          showMessage("🤝 It's a Draw!", "draw");
+          gameOver = true;
+          return;
+        }
+        const next = (count % 2 === 0) ? 'X' : '0';
+        turnDisplay.textContent = next;
+        turnDisplay.style.color = next === 'X' ? '#ff4488' : '#00f2ff';
+      });
+    });
+
+    resetBtn.addEventListener('click', () => {
+      boxes.forEach(box => {
+        box.innerText = "";
+        box.className = "box";
+      });
+      msgArea.innerHTML = '';
+      count = 0;
+      gameOver = false;
+      turnDisplay.textContent = 'X';
+      turnDisplay.style.color = '#00f2ff';
+    });
+  </script>
+</body>
+</html>

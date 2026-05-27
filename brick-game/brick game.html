@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brick Breaker</title>
+
+    <!-- Orbitron Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: url("neon wallpaper.jpg") no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: rgb(0, 242, 255);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgb(0, 242, 255), 0 0 20px black;
+        }
+
+        #scoreBar {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+            font-weight: bold;
+        }
+
+        #board {
+            background: rgba(0, 0, 0);
+            border: 4px solid rgb(0, 242, 255);
+            border-radius: 15px;
+            box-shadow: 0 0 12px rgb(0, 242, 255);
+        }
+
+        #musicToggle {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            background: rgb(0, 242, 255);
+            color: black;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(0, 242, 255);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        #musicToggle:hover {
+            background: rgb(0, 204, 224);
+            box-shadow: 0 0 15px rgb(0, 204, 224);
+        }
+    </style>
+</head>
+
+<body><a href="../home/index.html" style="position:fixed;top:16px;left:16px;padding:8px 20px;font-family:Orbitron,sans-serif;background:rgba(0,0,0,0.6);border:1px solid rgba(0,255,255,0.4);border-radius:20px;color:cyan;text-decoration:none;font-size:0.85rem;z-index:99;">← Back to Home</a>
+    <h1>🎮 Brick Breaker</h1>
+    <p id="scoreBar">Score : 0</p>
+    <canvas id="board"></canvas>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" autoplay loop>
+        <source src="bg-music.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Mute/Unmute Button -->
+    <button id="musicToggle" onclick="toggleMusic()">🔇 Unmute Music</button>
+
+
+    <script>
+        // board
+        let board;
+        let boardWidth = 650;
+        let boardHeight = 650;
+        // let boardWidth = window.innerWidth * 0.60;
+        // let boardHeight = window.innerHeight *0.80;
+        let context;
+
+        //player
+        let playerWidth = 100;
+        // let playerWidth = 650; // for testing
+        let playerHeight = 10;
+        let playerVelocityX = 30;
+
+        let player = {
+            x: boardWidth / 2 - playerWidth / 2,
+            y: boardHeight - playerHeight - 5,
+            width: playerWidth,
+            height: playerHeight,
+            velocityX: playerVelocityX
+        } //player object (json object)
+
+        //ball
+        let ballWidth = 10;
+        let ballHeight = 10;
+        let ballVelocityX = boardWidth * 0.003;
+        let ballVelocityY = boardHeight * 0.002;
+        //for testing
+        //  let ballVelocityX = 10;
+        //  let ballVelocityY = 10;
+
+        let ball = {
+            x: boardWidth / 2,
+            y: boardHeight / 2,
+            width: ballWidth,
+            height: ballHeight,
+            velocityX: ballVelocityX,
+            velocityY: ballVelocityY
+        }
+
+        //blocks
+        let blockArray = [];
+        let blockWidth = 50;
+        let blockHeight = 10;
+        let blockColumns = 8;
+        let blockRows = 5; //add more as game goes on
+        let blockMaxRows = 15; //limit how many rows
+        let blockCount = 0; // after destroying a block -> bolckCount - 1 , at blockCount =0 -> new level
+
+        //starting block corner top left
+        let blockX = 15;
+        let blockY = 45;
+
+        let score = 0;
+        let gameOver = false;
+
+        window.onload = function () {
+            board = document.getElementById("board");
+            board.height = boardHeight;
+            board.width = boardWidth;
+            context = board.getContext("2d"); //used for drawing on the board
+
+            //for drawing initial player
+            context.fillStyle = "lightgreen";
+            context.fillRect(player.x, player.y, player.width, player.height);
+            //fillStyle and fillRect are canvas function
+
+            requestAnimationFrame(update);
+            document.addEventListener("keydown", movePlayer);
+
+            //create blocks
+            createBlocks();
+        }
+
+        function update() {
+            requestAnimationFrame(update);
+            if (gameOver == true) return;
+
+            context.clearRect(0, 0, board.width, board.height);
+
+            //player
+            context.fillStyle = "#ff00ff";
+            context.shadowColor = "#ff00ff";
+            context.shadowBlur = 20;
+            context.fillRect(player.x, player.y, player.width, player.height);
+            context.shadowBlur = 0;
+
+            //ball
+            context.fillStyle = "white";
+            ball.x += ball.velocityX;
+            ball.y += ball.velocityY;
+            context.beginPath();
+            context.arc(ball.x + ball.width / 2, ball.y + ball.height / 2, ball.width, 0, Math.PI * 2);
+            context.fill();
+
+            // For Bounce Ball from the walls
+            if (ball.y <= 0) {
+                //if ball touches top wall or top of canvas
+                ball.velocityY *= -1; //reversing the y- direction velocity
+            }
+            else if (ball.x <= 0 || (ball.x + ball.width) >= boardWidth) {
+                //if ball touches left or right of canvas or wall
+                ball.velocityX *= -1;//reversing the x-direction velocity
+            }
+            else if ((ball.y + ball.height) >= boardHeight) {
+                //Game Over
+                //if ball touches the bottom of canvas
+                context.font = "bold 24px Orbitron, sans-serif";
+                context.fillStyle = "#ff0044";
+                context.shadowColor = "black";
+                context.shadowBlur = 5;
+                context.textAlign = "center";
+                context.fillText("GAME OVER — Press SPACE to Restart", board.width / 2, board.height / 2);
+                gameOver = true;
+            }
+
+            //bounce the ball off the player paddle
+            if (topCollision(ball, player) || bottomCollision(ball, player)) {
+                ball.velocityY *= -1; //reversing y direction velocity
+            }
+            else if (leftCollision(ball, player) || rightCollision(ball, player)) {
+                ball.velocityX *= -1;
+                ball.velocityY *= -1;
+            }
+
+            //blocks
+            const blockColors = ["#00f2ff", "#7fff00", "#ffcc00", "#ff4444", "#9966ff"];
+            context.shadowBlur = 15;
+            for (let i = 0; i < blockArray.length; i++) {
+                let block = blockArray[i];
+                if (block.break == true) continue; //skip broken blocks
+
+                let color = blockColors[i % blockColors.length];
+                context.fillStyle = color;
+                context.shadowColor = color;
+
+                if (topCollision(ball, block) || bottomCollision(ball, block)) {
+                    block.break = true;
+                    ball.velocityY *= -1; //reverse y direction velocity
+                    blockCount--;
+                    score += 100;
+                    break;  // Stop checking more blocks this frame
+                }
+                else if (leftCollision(ball, block) || rightCollision(ball, block)) {
+                    block.break = true;
+                    ball.velocityX *= -1; //reverse x direction velocity
+                    blockCount--;
+                    score += 100;
+                    break;
+                }
+                context.fillRect(block.x, block.y, block.width, block.height);
+            }
+            context.shadowBlur = 0;
+
+            // Level complete – reset blocks - Next Level
+            if (blockCount === 0) {
+                score += 100 * blockRows * blockColumns; // vbonus points
+                if (blockRows < blockMaxRows) {
+                    blockRows++;
+                }
+                createBlocks();
+                ball.velocityY *= -1;
+            }
+
+            document.getElementById("scoreBar").innerText = "Score : " + score;
+        } //this is Game loop
+
+        // Remember : Downward direction is Positive
+
+        function outOfBounds(xPosition) {
+            return (xPosition < 0 || xPosition + playerWidth > boardWidth);
+        }//checks whether the player is out of boundary or not
+
+        function movePlayer(e) {
+            if (gameOver) {
+                if (e.code == "Space") {
+                    resetGame();
+                }
+            }
+
+            if (e.code == "ArrowLeft") {
+                let nextPlayerX = player.x - player.velocityX;
+                if (!outOfBounds(nextPlayerX)) {
+                    player.x = nextPlayerX;
+                }
+            }
+            else if (e.code == "ArrowRight") {
+                // player.x += player.velocityX;
+                let nextPlayerX = player.x + player.velocityX;
+                if (!outOfBounds(nextPlayerX)) {
+                    player.x = nextPlayerX;
+                }
+            }
+        }
+
+        //for dectecting collision on rectangle
+        function detectCollision(a, b) { // a : ball , b : block
+            if (b.break) return false; // skip broken blocks
+            return a.x < b.x + b.width && //a's top left corner dosen't reach b's top right corner
+                a.x + a.width > b.x && //a's top right corner dosen't reach b's top left corner
+                a.y < b.y + b.height && //a's top left corner dosen't reach b's bottom left corner
+                a.y + a.height > b.y; // a's bottom left corner passes b's top left corner
+        }
+
+        function topCollision(ball, block) { //a is above b (ball is above block)
+            return detectCollision(ball, block) && (ball.y + ball.height) >= block.y;
+        }
+
+        function bottomCollision(ball, block) { //a is below b (ball is below block)
+            return detectCollision(ball, block) && ball.y <= (block.y + block.height);
+        }
+        function leftCollision(ball, block) { // a is left of b (ball is in left of block)
+            return detectCollision(ball, block) && (ball.x + ball.width) >= block.x;
+        }
+
+        function rightCollision(ball, block) { //a is in right of b (ball is in right of block)
+            return detectCollision(ball, block) && ball.x <= (block.x + block.width);
+        }
+
+        function createBlocks() {
+            blockArray = []; //clear block array
+            for (let c = 0; c < blockColumns; c++) {
+                for (let r = 0; r < blockRows; r++) {
+                    let block = {
+                        x: blockX + c * blockWidth + c * 30, //c*30 space 30 pixels apart columns
+                        y: blockY + r * blockHeight + r * 15, //r*15 space 15 pixels apart rows
+                        width: blockWidth,
+                        height: blockHeight,
+                        break: false
+                    }
+                    blockArray.push(block);
+                }
+            }
+            blockCount = blockArray.length;
+        }
+
+        function resetGame() {
+            gameOver = false;
+            player = {
+                x: boardWidth / 2 - playerWidth / 2,
+                y: boardHeight - playerHeight - 5,
+                width: playerWidth,
+                height: playerHeight,
+                velocityX: playerVelocityX
+            }
+
+            ball = {
+                x: boardWidth / 2,
+                y: boardHeight / 2,
+                width: ballWidth,
+                height: ballHeight,
+                velocityX: ballVelocityX,
+                velocityY: ballVelocityY
+            }
+
+            blockArray = [];
+            blockRows = 5;
+            score = 0;
+            createBlocks();
+        }
+
+        // Background Music
+        function toggleMusic() {
+            const music = document.getElementById("bgMusic");
+            const button = document.getElementById("musicToggle");
+
+            if (music.paused) {
+                music.play();
+                button.innerText = "🔊 Mute Music";
+            } else {
+                music.pause();
+                button.innerText = "🔇 Unmute Music";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
