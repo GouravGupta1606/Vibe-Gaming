@@ -1,0 +1,143 @@
+/* =====================================================================
+   VibGaming — memory.css
+   ===================================================================== */
+
+@import url('https://fonts.cdnfonts.com/css/surprisedmonkey');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  font-family: 'surprisedmonkey', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../assets/images/img.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+}
+
+h1 {
+  margin-top: 20px;
+  font-size: 2rem;
+  text-shadow: 0 0 20px cyan;
+  color: cyan;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 110px);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.card {
+  width: 110px;
+  height: 110px;
+  cursor: pointer;
+  border-radius: 10px;
+  position: relative;
+  perspective: 1000px;
+  transition: transform 0.1s;
+}
+
+.card:hover { transform: scale(1.05); }
+
+.card .front,
+.card .back {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  backface-visibility: hidden;
+  transition: transform 0.5s;
+  border-radius: 10px;
+}
+
+.card .front {
+  background-image: url('../assets/images/img2.jpg');
+  background-size: cover;
+  transform: rotateY(0deg);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.card .back {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  border: 2px solid rgba(0,255,255,0.4);
+  box-shadow: inset 0 0 20px rgba(0,255,255,0.1);
+}
+
+.card.flipped .front  { transform: rotateY(180deg); }
+.card.flipped .back   { transform: rotateY(360deg); }
+
+.card.matched .back {
+  border: 2px solid lime;
+  box-shadow: 0 0 15px lime, inset 0 0 15px rgba(0,255,0,0.2);
+  animation: matchPulse 0.5s ease;
+}
+
+@keyframes matchPulse {
+  0%   { transform: rotateY(360deg) scale(1); }
+  50%  { transform: rotateY(360deg) scale(1.1); }
+  100% { transform: rotateY(360deg) scale(1); }
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,255,255,0.3);
+}
+
+.stat { text-align: center; }
+
+.stat span {
+  font-size: 1.8rem;
+  color: cyan;
+  display: block;
+}
+
+.stat label { font-size: 0.9rem; color: #aaa; }
+
+.win-message {
+  margin-top: 20px;
+  font-size: 1.8rem;
+  color: lime;
+  text-shadow: 0 0 20px lime;
+  animation: winGlow 1s infinite alternate;
+  display: none;
+}
+
+@keyframes winGlow {
+  from { text-shadow: 0 0 10px lime; }
+  to   { text-shadow: 0 0 40px lime, 0 0 60px lime; }
+}
+
+.restart-btn {
+  margin-top: 16px;
+  margin-bottom: 30px;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  font-family: 'surprisedmonkey', sans-serif;
+  background: linear-gradient(135deg, #00f260, #0575e6);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,255,255,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: none;
+}
+
+.restart-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0,255,255,0.7);
+}

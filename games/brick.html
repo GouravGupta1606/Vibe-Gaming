@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brick Breaker – Vibe Gaming</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/brick.css">
+</head>
+<body>
+  <a href="../index.html" class="back-btn">← Back to Home</a>
+
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-cell">
+      <span class="hud-label">Score</span>
+      <span class="hud-value" id="hud-score">0</span>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-cell">
+      <span class="hud-label">Lives</span>
+      <span class="hud-value lives" id="hud-lives">❤❤❤</span>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-cell">
+      <span class="hud-label">Level</span>
+      <span class="hud-value level" id="hud-level">1</span>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-cell">
+      <span class="hud-label">Best</span>
+      <span class="hud-value" id="hud-hi">0</span>
+    </div>
+  </div>
+
+  <canvas id="board"></canvas>
+
+  <!-- Controls hint -->
+  <div class="controls-hint">
+    <span class="hint-pill"><kbd>←</kbd> <kbd>→</kbd> or Mouse — move</span>
+    <span class="hint-pill"><kbd>SPACE</kbd> — launch / action</span>
+    <span class="hint-pill"><kbd>P</kbd> — pause</span>
+  </div>
+
+  <!-- Power-up legend -->
+  <div class="powerup-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#00f2ff"></span> WIDE paddle</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#7fff00"></span> SLOW ball</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ff4488"></span> +Life</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ff9900"></span> FIREBALL</span>
+  </div>
+
+  <button id="musicToggle">🔇 Unmute Music</button>
+
+  <audio id="bgMusic" loop>
+    <source src="../assets/audio/bg-music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="../js/brick.js"></script>
+</body>
+</html>

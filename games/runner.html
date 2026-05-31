@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endless Runner – Vibe Gaming</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/runner.css">
+</head>
+
+<body>
+  <a href="../index.html" class="back-btn">← Back to Home</a>
+
+  <h1>🏃 ENDLESS RUNNER</h1>
+
+  <div class="score-bar">
+    <div class="score-item">
+      <span id="scoreDisplay">0</span>
+      <label>SCORE</label>
+    </div>
+    <div class="score-item">
+      <span id="highScoreDisplay">0</span>
+      <label>BEST</label>
+    </div>
+    <div class="score-item">
+      <span id="speedDisplay">1</span>
+      <label>SPEED</label>
+    </div>
+  </div>
+
+  <canvas id="gameCanvas" width="800" height="300"></canvas>
+
+  <div class="controls">
+    <span>SPACE / ↑</span> Jump &nbsp;|&nbsp; <span>↓</span> Duck &nbsp;|&nbsp; Double-tap to double jump
+  </div>
+<script src="../js/runner.js"></script>
+</body>
+
+</html>

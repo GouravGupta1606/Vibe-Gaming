@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Match – Vibe Gaming</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/memory.css">
+</head>
+<body>
+  <a href="../index.html" class="back-btn">← Back to Home</a>
+  <h1>🧠 Memory Match</h1>
+
+  <div class="stats">
+    <div class="stat">
+      <span id="moves">0</span>
+      <label>Moves</label>
+    </div>
+    <div class="stat">
+      <span id="matched">0</span>
+      <label>Matched</label>
+    </div>
+    <div class="stat">
+      <span id="remaining">8</span>
+      <label>Remaining</label>
+    </div>
+  </div>
+
+  <div class="game-board" id="game-board"></div>
+
+  <div class="win-message" id="win-msg">🎉 Congratulations! You Won!</div>
+  <button class="restart-btn" id="restart-btn" onclick="initGame()">🔄 Play Again</button>
+
+  <script src="../js/memory.js"></script>
+</body>
+</html>

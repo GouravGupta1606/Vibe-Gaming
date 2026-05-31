@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vibe Gaming</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────────────── -->
+  <nav>
+    <div class="dv">
+      <a href="#home" class="nav-logo">
+        <img src="assets/images/logo.jpg" alt="Vibe Gaming Logo">
+        Vibe Gaming
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home">HOME</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────── -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">VIBE GAMING</h1>
+      <p class="hero-subtitle">GAME ZONE</p>
+      <p class="hero-tagline">FLIP A CARD · CHOOSE YOUR GAME · PLAY</p>
+
+      <div class="cards-row">
+        <a class="card-flip-wrap" href="#mcf" data-card="card1">
+          <div class="card-flip">
+            <div class="card-flip-inner">
+              <div class="card-face card-face-front"></div>
+              <div class="card-face card-face-back" style="background-image:url('assets/images/memory.jpg')"></div>
+            </div>
+          </div>
+          <span class="card-label">MEMORY</span>
+        </a>
+
+        <a class="card-flip-wrap" href="#runner" data-card="card2">
+          <div class="card-flip">
+            <div class="card-flip-inner">
+              <div class="card-face card-face-front"></div>
+              <div class="card-face card-face-back" style="background:#0a0a1a;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:0.7rem;color:#00f2ff;text-align:center;">🏃<br>RUNNER</div>
+            </div>
+          </div>
+          <span class="card-label">RUNNER</span>
+        </a>
+
+        <a class="card-flip-wrap" href="#tct" data-card="card3">
+          <div class="card-flip">
+            <div class="card-flip-inner">
+              <div class="card-face card-face-front"></div>
+              <div class="card-face card-face-back" style="background-image:url('assets/images/tictac.jpg')"></div>
+            </div>
+          </div>
+          <span class="card-label">TIC TAC TOE</span>
+        </a>
+
+        <a class="card-flip-wrap" href="#sg" data-card="card4">
+          <div class="card-flip">
+            <div class="card-flip-inner">
+              <div class="card-face card-face-front"></div>
+              <div class="card-face card-face-back" style="background-image:url('assets/images/snake.jpg')"></div>
+            </div>
+          </div>
+          <span class="card-label">SNAKE</span>
+        </a>
+
+        <a class="card-flip-wrap" href="#bg" data-card="card5">
+          <div class="card-flip">
+            <div class="card-flip-inner">
+              <div class="card-face card-face-front"></div>
+              <div class="card-face card-face-back" style="background-image:url('assets/images/brick.jpg')"></div>
+            </div>
+          </div>
+          <span class="card-label">BRICK</span>
+        </a>
+      </div>
+
+      <p class="flip-cta">🃏 Hover a card to preview · Click to jump to the game</p>
+    </div>
+  </section>
+
+  <!-- ── Sections wrapper ─────────────────────────────────────────── -->
+  <div class="section-wrapper">
+
+    <!-- Memory Match -->
+    <div class="game-section theme-blue" id="mcf">
+      <div class="section-inner">
+        <div class="section-info">
+          <h2 class="section-title" style="color:#2e7fea">🧠 Memory Match</h2>
+          <p class="section-desc">
+            Test your focus and short-term memory in this card-flipping challenge.
+            Flip two cards — if they match, they stay open. Match all 8 pairs in the fewest moves to win!
+          </p>
+          <p class="howto-title">How to Play</p>
+          <ul class="howto-list">
+            <li>Click any card to flip it and reveal the emoji.</li>
+            <li>Click a second card — if they match, they stay face-up.</li>
+            <li>Continue until all 8 pairs are matched.</li>
+            <li>Card positions randomize every game.</li>
+          </ul>
+          <a href="games/memory.html" target="_blank" class="play-btn btn-blue">▶ PLAY NOW</a>
+        </div>
+        <div class="section-media">
+          <p class="demo-label">Game Demo</p>
+          <video class="demo-video" poster="assets/images/memory.jpg" src="assets/videos/mgv.mp4" controls></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endless Runner -->
+    <div class="game-section theme-orange" id="runner">
+      <div class="section-inner">
+        <div class="section-info">
+          <h2 class="section-title" style="color:#ff8c00">🏃 Endless Runner</h2>
+          <p class="section-desc">
+            Sprint through a neon-lit world dodging relentless obstacles.
+            Jump, double-jump, and duck — the longer you survive, the faster it gets!
+          </p>
+          <p class="howto-title">How to Play</p>
+          <ul class="howto-list">
+            <li><strong>SPACE</strong> or <strong>↑</strong> to jump.</li>
+            <li>Press <strong>↑</strong> again mid-air for a double jump.</li>
+            <li>Press <strong>↓</strong> to duck under flying obstacles.</li>
+            <li>Speed increases over time — beat your high score!</li>
+          </ul>
+          <a href="games/runner.html" target="_blank" class="play-btn btn-orange">▶ PLAY NOW</a>
+        </div>
+        <div class="section-media">
+          <p class="demo-label">Live Preview</p>
+          <div class="runner-preview" onclick="window.open('games/runner.html','_blank')">
+            <canvas id="previewCanvas" width="340" height="210"></canvas>
+            <div class="play-overlay">
+              <i class="fa-solid fa-play"></i>
+              CLICK TO PLAY
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tic Tac Toe -->
+    <div class="game-section theme-pink" id="tct">
+      <div class="section-inner">
+        <div class="section-info">
+          <h2 class="section-title" style="color:#fa09c6">🎮 Tic Tac Toe</h2>
+          <p class="section-desc">
+            Classic 1v1 offline on the same device. Player 1 is ✖ and Player 2 is ⭕.
+            Get three in a row to win — or it's a draw!
+          </p>
+          <p class="howto-title">How to Play</p>
+          <ul class="howto-list">
+            <li>Player 1 = ✖ &nbsp;·&nbsp; Player 2 = ⭕. X always starts.</li>
+            <li>Click any empty square to place your symbol.</li>
+            <li>Three in a row (row, column, or diagonal) wins.</li>
+            <li>Hit 🔄 Reset to play again anytime.</li>
+          </ul>
+          <a href="games/tictactoe.html" target="_blank" class="play-btn btn-pink">▶ PLAY NOW</a>
+        </div>
+        <div class="section-media">
+          <p class="demo-label">Game Demo</p>
+          <video class="demo-video" poster="assets/images/tictac.jpg" src="assets/videos/tttv.mp4" controls></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Snake -->
+    <div class="game-section theme-green" id="sg">
+      <div class="section-inner">
+        <div class="section-info">
+          <h2 class="section-title" style="color:#0fbc4e">🐍 Snake Game</h2>
+          <p class="section-desc">
+            The timeless classic! Control the hungry snake, collect food to grow longer,
+            but avoid the walls and your own tail. How long can you survive?
+          </p>
+          <p class="howto-title">How to Play</p>
+          <ul class="howto-list">
+            <li>Arrow keys ↑ ↓ ← → to move the snake.</li>
+            <li>Eat food icons to grow and score points.</li>
+            <li>Avoid walls and your own tail — game over if you hit them.</li>
+            <li>The snake speeds up as you score — stay sharp!</li>
+          </ul>
+          <a href="games/snake.html" target="_blank" class="play-btn btn-green">▶ PLAY NOW</a>
+        </div>
+        <div class="section-media">
+          <p class="demo-label">Game Demo</p>
+          <video class="demo-video" poster="assets/images/snake.jpg" src="assets/videos/snake game video.mp4" controls></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brick Breaker -->
+    <div class="game-section theme-gold" id="bg">
+      <div class="section-inner">
+        <div class="section-info">
+          <h2 class="section-title" style="color:#a97e08">🧱 Brick Breaker</h2>
+          <p class="section-desc">
+            Upgraded neon brick breaker with 8 levels, power-ups, lives, combo multiplier,
+            particle explosions, and mouse control. Destroy all bricks to advance!
+          </p>
+          <p class="howto-title">How to Play</p>
+          <ul class="howto-list">
+            <li>Move paddle with ← → arrow keys or mouse.</li>
+            <li>SPACE to launch ball. P to pause.</li>
+            <li>Collect glowing power-ups: Wide, Slow, Fireball, +Life.</li>
+            <li>Chain hits for a combo multiplier bonus score.</li>
+            <li>3 lives — don't let the ball fall! 8 levels total.</li>
+          </ul>
+          <a href="games/brick.html" target="_blank" class="play-btn btn-gold">▶ PLAY NOW</a>
+        </div>
+        <div class="section-media">
+          <p class="demo-label">Game Demo</p>
+          <video class="demo-video" poster="assets/images/brick.jpg" src="assets/videos/brickv.mp4" controls></video>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.section-wrapper -->
+
+  <!-- ── Footer ────────────────────────────────────────────────────── -->
+  <footer class="footer" id="contact">
+    <div>
+      <h3>Student Project</h3>
+      <p>Made by B.Tech students</p>
+      <p>2nd Year · JIIT</p>
+      <p>For Educational Purpose</p>
+    </div>
+    <div>
+      <h3>Contact Us</h3>
+      <p><i class="fa-solid fa-envelope"></i> &nbsp;vibegaming18@gmail.com</p>
+      <p><i class="fa-solid fa-phone"></i> &nbsp;8219603264</p>
+      <p><i class="fa-brands fa-instagram"></i> &nbsp;vibe_ig</p>
+      <p><i class="fa-brands fa-square-x-twitter"></i> &nbsp;vibegaming_xhandle</p>
+    </div>
+    <div>
+      <h3>Credits</h3>
+      <p><i class="fa-brands fa-font-awesome"></i> &nbsp;FontAwesome icons</p>
+      <p><i class="fa-brands fa-google"></i> &nbsp;Google Fonts</p>
+      <p>Vecteezy images</p>
+      <p>Inshot video editing</p>
+    </div>
+    <div class="suggestion-box">
+      <h3>Suggestion Box</h3>
+      <textarea placeholder="Got ideas? Tell us!"></textarea><br>
+      <button type="button">Send &nbsp;<i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+    <div>
+      <h3>Rate Us</h3>
+      <div class="rating-stars">
+        <label class="star-row"><input type="radio" name="rating" value="5"> <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+        <label class="star-row"><input type="radio" name="rating" value="4"> <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+        <label class="star-row"><input type="radio" name="rating" value="3"> <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+        <label class="star-row"><input type="radio" name="rating" value="2"> <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+        <label class="star-row"><input type="radio" name="rating" value="1"> <i class="fa-solid fa-star"></i></label>
+      </div>
+    </div>
+    <div class="love-note">
+      Made with <i class="fa-solid fa-heart" style="color:#ff0000"></i> by us!!!
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <i class="fa-regular fa-copyright"></i> 2025 Vibe Gaming. All rights reserved.
+  </div>
+
+  <script src="js/home.js"></script>
+</body>
+</html>

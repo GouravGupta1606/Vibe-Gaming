@@ -1,0 +1,130 @@
+/* =====================================================================
+   VibGaming — runner.css
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: #0a0a1a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  background: radial-gradient(ellipse at top, #0d1b4b 0%, #0a0a1a 70%);
+  z-index: -2;
+}
+
+h1 {
+  font-size: 2.2rem;
+  color: #00f2ff;
+  text-shadow: 0 0 10px #00f2ff, 0 0 30px #00f2ff;
+  margin-top: 60px;
+  margin-bottom: 8px;
+  letter-spacing: 4px;
+}
+
+.hud-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 12px;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,242,255,0.2);
+}
+
+.hud-item { text-align: center; }
+
+.hud-item span {
+  display: block;
+  font-size: 1.2rem;
+  color: #00f2ff;
+  text-shadow: 0 0 8px #00f2ff;
+}
+
+.hud-item label { font-size: 0.65rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); }
+
+#gameCanvas {
+  border: 2px solid rgba(0,242,255,0.4);
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0,242,255,0.2), 0 0 60px rgba(0,242,255,0.08);
+  display: block;
+}
+
+.controls-hint {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hint-pill {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+
+.hint-pill kbd { color: #00f2ff; }
+
+/* ── Score bar ───────────────────────────────────────────────────────── */
+.score-bar {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 16px;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,255,255,0.3);
+}
+
+.score-item { text-align: center; }
+
+.score-item span {
+  font-size: 1.4rem;
+  color: #00f2ff;
+  display: block;
+}
+
+.score-item label {
+  font-size: 0.7rem;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+#gameCanvas {
+  border: 2px solid rgba(0,242,255,0.4);
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0,242,255,0.2), 0 0 60px rgba(0,242,255,0.08);
+  display: block;
+  background: #0a0a1a;
+}
+
+.controls {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: #555;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.controls span { color: #00f2ff; }
