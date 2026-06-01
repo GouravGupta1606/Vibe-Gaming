@@ -86,7 +86,7 @@ h1 {
 
 .hint-pill kbd { color: #00f2ff; }
 
-/* ── Score bar ───────────────────────────────────────────────────────── */
+/*  Score bar  */
 .score-bar {
   display: flex;
   gap: 40px;

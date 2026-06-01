@@ -1,7 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    // ─── Constants ───────────────────────────────────────────────────────────
+    //  Constants 
     const GROUND_Y = 240;
     const PLAYER_W = 36;
     const PLAYER_H = 50;
@@ -9,7 +9,7 @@ const canvas = document.getElementById('gameCanvas');
     const JUMP_FORCE = -16;
     const DUCK_H = 28;
 
-    // ─── State ───────────────────────────────────────────────────────────────
+    //  State 
     let gameState = 'idle'; // idle | running | over
     let score = 0;
     let highScore = 0;
@@ -17,7 +17,7 @@ const canvas = document.getElementById('gameCanvas');
     let gameSpeed = 5;
     let animFrame;
 
-    // ─── Player ──────────────────────────────────────────────────────────────
+    //  Player 
     const player = {
       x: 100,
       y: GROUND_Y - PLAYER_H,
@@ -29,13 +29,13 @@ const canvas = document.getElementById('gameCanvas');
       get w() { return this.isDucking ? PLAYER_W + 14 : PLAYER_W; }
     };
 
-    // ─── Obstacles ───────────────────────────────────────────────────────────
+    //  Obstacles 
     let obstacles = [];
     let particles = [];
     let bgStars = [];
     let groundOffset = 0;
 
-    // ─── Init stars ──────────────────────────────────────────────────────────
+    //  Init stars 
     for (let i = 0; i < 80; i++) {
       bgStars.push({
         x: Math.random() * canvas.width,
@@ -46,7 +46,7 @@ const canvas = document.getElementById('gameCanvas');
       });
     }
 
-    // ─── Obstacle types ──────────────────────────────────────────────────────
+    //  Obstacle types 
     const OBSTACLE_TYPES = [
       // Low cactus (jump over)
       { w: 24, h: 50, groundOffset: 0, color: '#ff4444', glow: '#ff4444', type: 'cactus' },
@@ -60,7 +60,7 @@ const canvas = document.getElementById('gameCanvas');
       { w: 32, h: 42, groundOffset: 0, color: '#00ffaa', glow: '#00ffaa', type: 'spike' },
     ];
 
-    // ─── Spawn logic ─────────────────────────────────────────────────────────
+    //  Spawn logic 
     let nextSpawnAt = 100;
 
     function spawnObstacle() {
@@ -80,7 +80,7 @@ const canvas = document.getElementById('gameCanvas');
       nextSpawnAt = frameCount + minGap + Math.floor(Math.random() * 80);
     }
 
-    // ─── Input ───────────────────────────────────────────────────────────────
+    //  Input 
     function jump() {
       if (gameState === 'idle' || gameState === 'over') {
         startGame();
@@ -124,7 +124,7 @@ const canvas = document.getElementById('gameCanvas');
       else setTimeout(() => duck(false), 200);
     });
 
-    // ─── Particles ───────────────────────────────────────────────────────────
+    //  Particles 
     function spawnJumpParticles() {
       for (let i = 0; i < 8; i++) {
         particles.push({
@@ -151,7 +151,7 @@ const canvas = document.getElementById('gameCanvas');
       }
     }
 
-    // ─── Collision ───────────────────────────────────────────────────────────
+    //  Collision 
     function checkCollision(obs) {
       const pad = 6; // small padding to make it feel fair
       return (
@@ -162,7 +162,7 @@ const canvas = document.getElementById('gameCanvas');
       );
     }
 
-    // ─── Draw helpers ────────────────────────────────────────────────────────
+    //  Draw helpers 
     function drawGlowRect(x, y, w, h, color, blur = 15) {
       ctx.save();
       ctx.shadowColor = color;
@@ -379,7 +379,7 @@ const canvas = document.getElementById('gameCanvas');
       }
     }
 
-    // ─── Update ──────────────────────────────────────────────────────────────
+    //  Update 
     function update() {
       if (gameState !== 'running') return;
 
@@ -435,7 +435,7 @@ const canvas = document.getElementById('gameCanvas');
       }
     }
 
-    // ─── Draw ────────────────────────────────────────────────────────────────
+    //  Draw 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -447,7 +447,7 @@ const canvas = document.getElementById('gameCanvas');
       drawHUD();
     }
 
-    // ─── Game lifecycle ───────────────────────────────────────────────────────
+    //  Game lifecycle 
     function startGame() {
       score = 0;
       frameCount = 0;
@@ -475,7 +475,7 @@ const canvas = document.getElementById('gameCanvas');
       spawnDeathParticles();
     }
 
-    // ─── Main loop ───────────────────────────────────────────────────────────
+    //  Main loop 
     function loop() {
       update();
       draw();

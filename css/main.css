@@ -5,7 +5,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@400;600;700&display=swap');
 
-/* ── Reset & Base ──────────────────────────────────────────────────── */
+/*  Reset & Base  */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -16,7 +16,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Nav ────────────────────────────────────────────────────────────── */
+/*  Nav  */
 .dv {
   position: sticky;
   top: 0;
@@ -69,7 +69,7 @@ body {
   text-shadow: 0 0 10px #00f2ff;
 }
 
-/* ── Hero Section ───────────────────────────────────────────────────── */
+/*  Hero Section  */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -118,7 +118,7 @@ body {
   letter-spacing: 2px;
 }
 
-/* ── Card Flip Row ──────────────────────────────────────────────────── */
+/*  Card Flip Row  */
 .cards-row {
   display: flex;
   gap: 24px;
@@ -164,12 +164,13 @@ body {
   border: 2px solid rgba(255,255,255,0.2);
 }
 
-.card-face-front { background: url('../assets/images/card.jpg') center / cover; }
+.card-face-front { background: url('assets/images/card.jpg') center / cover; }
 
 .card-face-back {
   transform: rotateY(180deg);
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card-label {
@@ -195,7 +196,7 @@ body {
   50% { opacity: 0.3; }
 }
 
-/* ── Game Sections ──────────────────────────────────────────────────── */
+/*  Game Sections  */
 .section-wrapper {
   max-width: 900px;
   margin: 60px auto;
@@ -291,7 +292,7 @@ body {
   display: block;
 }
 
-/* ── Play Buttons ───────────────────────────────────────────────────── */
+/*  Play Buttons  */
 .play-btn {
   display: inline-block;
   margin-top: 24px;
@@ -347,7 +348,7 @@ body {
 
 .runner-preview .play-overlay i { font-size: 2.2rem; margin-bottom: 8px; }
 
-/* ── Footer ─────────────────────────────────────────────────────────── */
+/*  Footer  */
 .footer {
   background: rgba(0, 0, 0, 0.85);
   border-top: 1px solid rgba(255,255,255,0.08);
@@ -427,7 +428,7 @@ body {
   grid-column: 1 / -1;
 }
 
-/* ── Shared back button used across all game pages ───────────────────── */
+/*  Shared back button used across all game pages  */
 .back-btn {
   position: fixed;
   top: 16px;

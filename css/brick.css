@@ -28,7 +28,7 @@ body::before {
   z-index: 0;
 }
 
-/* ── HUD Bar ─────────────────────────────────────────────────────────── */
+/*  HUD Bar  */
 .hud {
   position: relative;
   z-index: 2;
@@ -77,7 +77,7 @@ body::before {
   background: rgba(255,255,255,0.12);
 }
 
-/* ── Canvas ──────────────────────────────────────────────────────────── */
+/*  Canvas  */
 #board {
   position: relative;
   z-index: 2;
@@ -91,7 +91,7 @@ body::before {
   display: block;
 }
 
-/* ── Controls hint ───────────────────────────────────────────────────── */
+/*  Controls hint  */
 .controls-hint {
   position: relative;
   z-index: 2;
@@ -117,7 +117,7 @@ body::before {
   font-family: 'Orbitron', sans-serif;
 }
 
-/* ── Music button ────────────────────────────────────────────────────── */
+/*  Music button  */
 #musicToggle {
   position: relative;
   z-index: 2;
@@ -139,7 +139,7 @@ body::before {
   box-shadow: 0 0 12px rgba(0,242,255,0.3);
 }
 
-/* ── Power-up legend ─────────────────────────────────────────────────── */
+/*  Power-up legend  */
 .powerup-legend {
   position: relative;
   z-index: 2;

@@ -3,7 +3,7 @@
    Card hover effects + live runner preview canvas animation
    ===================================================================== */
 
-// ── Card hover image swaps ────────────────────────────────────────────
+//  Card hover image swaps 
 const cardBackImages = {
   card1: 'memory',
   card2: null,      // runner — uses canvas
@@ -28,7 +28,7 @@ document.querySelectorAll('.card-flip-wrap').forEach(wrap => {
   }
 });
 
-// ── Live Runner preview animation ─────────────────────────────────────
+//  Live Runner preview animation 
 (function () {
   const cv = document.getElementById('previewCanvas');
   if (!cv) return;

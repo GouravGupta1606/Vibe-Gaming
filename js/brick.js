@@ -2,26 +2,26 @@
    VibGaming — brick.js  (Upgraded Brick Breaker)
 
    Features:
-   ─ Mouse + keyboard (smooth hold-down) paddle control
-   ─ 3 lives with heart display
-   ─ Level progression (speed + rows increase)
-   ─ 4 power-up types: Wide Paddle, Slow Ball, Extra Life, Fireball
-   ─ Particle explosions on brick break
-   ─ Combo multiplier (consecutive hits)
-   ─ Accurate circle-vs-rect collision
-   ─ Ball angle varies by where it hits paddle
-   ─ HUD: Score | Lives | Level | High Score
-   ─ States: MENU → PLAYING → PAUSED → LIFE_LOST → GAME_OVER → WIN
-   ─ Keyboard: ← → to move, P to pause, SPACE to launch/restart
+    Mouse + keyboard (smooth hold-down) paddle control
+    3 lives with heart display
+    Level progression (speed + rows increase)
+    4 power-up types: Wide Paddle, Slow Ball, Extra Life, Fireball
+    Particle explosions on brick break
+    Combo multiplier (consecutive hits)
+    Accurate circle-vs-rect collision
+    Ball angle varies by where it hits paddle
+    HUD: Score | Lives | Level | High Score
+    States: MENU → PLAYING → PAUSED → LIFE_LOST → GAME_OVER → WIN
+    Keyboard: ← → to move, P to pause, SPACE to launch/restart
    ===================================================================== */
 
-// ── Canvas setup ──────────────────────────────────────────────────────
+//  Canvas setup 
 const canvas  = document.getElementById('board');
 const ctx     = canvas.getContext('2d');
 const W = canvas.width  = 660;
 const H = canvas.height = 520;
 
-// ── Game constants ────────────────────────────────────────────────────
+//  Game constants 
 const PADDLE_W_NORMAL = 110;
 const PADDLE_W_WIDE   = 180;
 const PADDLE_H        = 12;
@@ -36,7 +36,7 @@ const BASE_SPEED      = 4.5;
 const MAX_LEVELS      = 8;
 const MAX_ROWS_START  = 4;
 
-// ── Color palettes ────────────────────────────────────────────────────
+//  Color palettes 
 const BRICK_COLORS = [
   ['#ff4466','#ff6680'],  // red
   ['#ff9900','#ffbb44'],  // orange
@@ -55,7 +55,7 @@ const PU_TYPES = {
 };
 const PU_LIST = Object.keys(PU_TYPES);
 
-// ── Game state ────────────────────────────────────────────────────────
+//  Game state 
 let state;      // 'MENU' | 'PLAYING' | 'PAUSED' | 'LIFE_LOST' | 'GAME_OVER' | 'WIN'
 let score, lives, level, combo, hiScore;
 let paddle, ball, bricks, particles, powerUps;
@@ -65,7 +65,7 @@ let keys = {};
 let mouseX = null;          // null = use keyboard
 let launched = false;
 
-// ── HUD DOM refs ──────────────────────────────────────────────────────
+//  HUD DOM refs 
 const hudScore  = document.getElementById('hud-score');
 const hudLives  = document.getElementById('hud-lives');
 const hudLevel  = document.getElementById('hud-level');
@@ -78,7 +78,7 @@ function updateHUD() {
   hudHi.textContent    = Math.max(score, hiScore);
 }
 
-// ── Paddle ────────────────────────────────────────────────────────────
+//  Paddle 
 function makePaddle() {
   return {
     x: W / 2 - paddleWidthCurrent / 2,
@@ -89,7 +89,7 @@ function makePaddle() {
   };
 }
 
-// ── Ball ──────────────────────────────────────────────────────────────
+//  Ball 
 function makeBall() {
   const spd = (BASE_SPEED + level * 0.35) * (puTimers.SLOW > 0 ? 0.55 : 1);
   return {
@@ -101,7 +101,7 @@ function makeBall() {
   };
 }
 
-// ── Bricks ────────────────────────────────────────────────────────────
+//  Bricks 
 function makeBricks() {
   const rows = MAX_ROWS_START + Math.min(level - 1, 4);
   const arr  = [];
@@ -123,7 +123,7 @@ function makeBricks() {
   return arr;
 }
 
-// ── Init / Reset ──────────────────────────────────────────────────────
+//  Init / Reset 
 function initGame() {
   score   = 0;
   lives   = 3;
@@ -156,7 +156,7 @@ function startLevel() {
   updateHUD();
 }
 
-// ── Collision: circle vs AABB ─────────────────────────────────────────
+//  Collision: circle vs AABB 
 function circleRect(bx, by, br, rx, ry, rw, rh) {
   const nearX = Math.max(rx, Math.min(bx, rx + rw));
   const nearY = Math.max(ry, Math.min(by, ry + rh));
@@ -174,7 +174,7 @@ function resolveCircleRect(bx, by, br, rx, ry, rw, rh) {
   return by < ry ? 'top' : 'bottom';
 }
 
-// ── Particles ─────────────────────────────────────────────────────────
+//  Particles 
 function spawnParticles(x, y, color, count = 12) {
   for (let i = 0; i < count; i++) {
     const ang = Math.random() * Math.PI * 2;
@@ -191,7 +191,7 @@ function spawnParticles(x, y, color, count = 12) {
   }
 }
 
-// ── Power-up drop ─────────────────────────────────────────────────────
+//  Power-up drop 
 function dropPowerUp(brick) {
   if (!brick.puType) return;
   const cfg = PU_TYPES[brick.puType];
@@ -228,7 +228,7 @@ function applyPowerUp(type) {
   }
 }
 
-// ── Update paddle ─────────────────────────────────────────────────────
+//  Update paddle 
 function updatePaddle() {
   const SPEED = 9;
   if (mouseX !== null) {
@@ -267,7 +267,7 @@ function updatePaddle() {
   }
 }
 
-// ── Update ball ────────────────────────────────────────────────────────
+//  Update ball 
 function updateBall() {
   if (!launched) {
     ball.x = paddle.x + paddle.w / 2;
@@ -346,7 +346,7 @@ function updateBall() {
   }
 }
 
-// ── Update power-ups ───────────────────────────────────────────────────
+//  Update power-ups 
 function updatePowerUps() {
   for (const pu of powerUps) {
     if (pu.dead) continue;
@@ -364,7 +364,7 @@ function updatePowerUps() {
   powerUps = powerUps.filter(p => !p.dead);
 }
 
-// ── Update particles ──────────────────────────────────────────────────
+//  Update particles 
 function updateParticles() {
   for (const p of particles) {
     p.x    += p.vx;
@@ -375,7 +375,7 @@ function updateParticles() {
   particles = particles.filter(p => p.life > 0);
 }
 
-// ── Check level complete ───────────────────────────────────────────────
+//  Check level complete 
 function checkLevelComplete() {
   if (bricks.every(b => b.dead)) {
     score += 500 * level;
@@ -395,7 +395,7 @@ function checkLevelComplete() {
   }
 }
 
-// ── Draw helpers ──────────────────────────────────────────────────────
+//  Draw helpers 
 function drawRoundedRect(x, y, w, h, r, fill, stroke, sBlur, sColor) {
   ctx.beginPath();
   ctx.roundRect(x, y, w, h, r);
@@ -535,7 +535,7 @@ function drawCombo() {
   ctx.shadowBlur  = 0;
 }
 
-// ── Overlay screens ───────────────────────────────────────────────────
+//  Overlay screens 
 function drawCenteredBox(lines) {
   // lines: [{text, size, color, glow}]
   const bw = 440, bh = lines.length * 50 + 40;
@@ -611,7 +611,7 @@ function drawLaunchHint() {
   ctx.fillText('SPACE or Click to launch', W / 2, paddle.y - 22);
 }
 
-// ── Main draw ─────────────────────────────────────────────────────────
+//  Main draw 
 function draw() {
   // Background
   ctx.fillStyle = '#080818';
@@ -639,7 +639,7 @@ function draw() {
   if (state === 'WIN')       drawWin();
 }
 
-// ── Main loop ─────────────────────────────────────────────────────────
+//  Main loop 
 function loop() {
   requestAnimationFrame(loop);
   if (state === 'PLAYING') {
@@ -652,7 +652,7 @@ function loop() {
   draw();
 }
 
-// ── Input ─────────────────────────────────────────────────────────────
+//  Input 
 document.addEventListener('keydown', e => {
   keys[e.key] = true;
 
@@ -716,6 +716,6 @@ document.getElementById('musicToggle').addEventListener('click', () => {
   else               { music.pause(); btn.textContent = '🔇 Unmute Music'; }
 });
 
-// ── Boot ──────────────────────────────────────────────────────────────
+//  Boot 
 initGame();
 loop();
