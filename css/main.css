@@ -172,6 +172,21 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+.memory-card{
+    background-image:url("../assets/images/memory.jpg");
+}
+
+.tictac-card{
+    background-image:url("../assets/images/tictac.jpg");
+}
+
+.snake-card{
+    background-image:url("../assets/images/snake.jpg");
+}
+
+.brick-card{
+    background-image:url("../assets/images/brick.jpg");
+}
 
 .card-label {
   font-family: 'Orbitron', sans-serif;
