@@ -164,7 +164,7 @@ body {
   border: 2px solid rgba(255,255,255,0.2);
 }
 
-.card-face-front { background: url('./assets/images/card.jpg') center / cover; }
+.card-face-front { background: url('../assets/images/card.jpg') center / cover; }
 
 .card-face-back {
   transform: rotateY(180deg);
