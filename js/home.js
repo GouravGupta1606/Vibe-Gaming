@@ -1,6 +1,6 @@
 /* =====================================================================
    VibGaming — home.js
-   Card hover effects + live runner preview canvas animation
+   Card hover effects + live runner preview canvas animation + Video Logic
    ===================================================================== */
 
 //  Card hover image swaps 
@@ -134,3 +134,21 @@ document.querySelectorAll('.card-flip-wrap').forEach(wrap => {
   }
   step();
 })();
+
+/* =====================================================================
+   Video Wrapper Logic
+   Handles unmuting and showing controls when the play overlay is clicked
+   ===================================================================== */
+document.querySelectorAll('.video-wrapper').forEach(wrapper => {
+  wrapper.addEventListener('click', function () {
+    const video = this.querySelector('video');
+    const overlay = this.querySelector('.play-overlay');
+
+    if (video && overlay) {
+      video.muted = false;
+      video.controls = true;
+      overlay.style.display = 'none';
+      video.currentTime = 0; // Starts the video from the beginning
+    }
+  });
+});
