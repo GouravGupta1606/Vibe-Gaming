@@ -21,14 +21,30 @@ Experience all games directly in your browser with no setup required.
 
 ## 📸 Project Preview
 
-Add screenshots here after uploading them to your repository.
+### Home Page Preview 
 
-```text
-Home Page Preview
-Brick Breaker Gameplay
-Snake Game
-Memory Match
-```
+<img src="assets/images/home-preview.png" alt="Home Page" width="600">
+
+### Endless Runner preview 
+
+<img src="assets/images/Endless-gameplay.png" alt="Endless Runner" width="500">
+
+### Brick Breaker Gameplay 
+
+<img src="assets/images/brick-gameplay.png" alt="Brick Breaker" width="500">
+
+### Snake Game 
+
+<img src="assets/images/snake-gameplay.png" alt="Snake" height="500" width="500">
+
+### Memory Match 
+
+<img src="assets/images/memory-gameplay.png" alt="Memory Match" width="500">
+
+### Tic Tac Toe preview 
+
+ <img src="assets/images/Tic-Tac-gameplay.png" alt="Tic Tac Toe" width="500">
+
 
 ---
 
