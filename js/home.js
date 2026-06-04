@@ -20,13 +20,6 @@ function setCardBack(id, src) {
   }
 }
 
-document.querySelectorAll('.card-flip-wrap').forEach(wrap => {
-  const id = wrap.dataset.card;
-  const img = cardBackImages[id];
-  if (img) {
-    wrap.querySelector('.card-face-back').style.backgroundImage = `url('../assets/images/${img}.jpg')`;
-  }
-});
 
 //  Live Runner preview animation 
 (function () {
